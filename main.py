@@ -56,22 +56,31 @@ async def get_current_weather(message: Message):
 
         data = json.loads(res.text)
 
-        weather_descr = data["weather"][0]["main"]
+        weather_description = data["weather"][0]["main"]
         sunrise = datetime.datetime.fromtimestamp(data['sys']['sunrise'])
         sunset = datetime.datetime.fromtimestamp(data['sys']['sunset'])
 
-        if weather_descr in code_to_pic:
-            wd = code_to_pic[weather_descr]
+        if weather_description in code_to_pic:
+            wd = code_to_pic[weather_description]
         else:
             wd = "You're in crazy conditions!"
 
-        await message.reply(f"Date: {datetime.datetime.now().strftime('%Y/%m/%d')}\n"
-                            f"Temperature: {round(data['main']['temp'])} C°\n"
-                            f"Feels like: {round(data['main']['feels_like'])} C°\n"
-                            f"Conditions: {wd}\n"
-                            f"Wind: {round(data['wind']['speed'])} m/s\n"
-                            f"Sunrise: {sunrise}\n"
-                            f"Sunset: {sunset}\n")
+        if city == "moscow" or city == "москва":
+            await message.reply(f"Date: {datetime.datetime.now().strftime('%Y/%m/%d')}\n"
+                        f"Temperature: {round(data['main']['temp'])} C°\n"
+                        f"Feels like: {round(data['main']['feels_like'])} C°\n"
+                        f"Conditions: {wd}\n"
+                        f"Wind: {round(data['wind']['speed'])} m/s\n"
+                        f"Sunrise: {sunrise}\n"
+                        f"Sunset: {sunset}\n")
+        else:
+            await message.reply(f"Date: {datetime.datetime.now().strftime('%Y/%m/%d')}\n"
+                        f"Temperature: {round(data['main']['temp'])} C°\n"
+                        f"Feels like: {round(data['main']['feels_like'])} C°\n"
+                        f"Conditions: {wd}\n"
+                        f"Wind: {round(data['wind']['speed'])} m/s\n")
+             
+            
 
     except TypeError or KeyError:
 
