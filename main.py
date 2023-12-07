@@ -82,10 +82,12 @@ async def get_current_weather(message: Message):
              
             
 
-    except TypeError or KeyError:
-
+    except TypeError:
         await message.answer("Something has gone wrong...")
         await message.reply("Check your data")
+    except KeyError:
+       await message.answer("Something has gone wrong...")
+       await message.reply("Check your data")
 
 
 async def main():
