@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message
-from aiogram.filters import Command, CommandStart
+from aiogram.filters import CommandStart, Command
 import asyncio
 import webbrowser
 import requests
@@ -8,14 +8,16 @@ import json
 import datetime
 import config
 
-bot = Bot(config.TOKEN)
+from config import TOKEN
+
+bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 API = '2830c3b025d1ec68c26d2e56c78571db'
 
 
 @dp.message(CommandStart())
-async def start(message: Message):
+async def start(message: Message) -> None:
     await message.answer(f"Hi, {message.from_user.full_name}! Welcome to our service. Please, choose one command.")
 
 
@@ -67,27 +69,27 @@ async def get_current_weather(message: Message):
 
         if city == "moscow" or city == "москва":
             await message.reply(f"Date: {datetime.datetime.now().strftime('%Y/%m/%d')}\n"
-                        f"Temperature: {round(data['main']['temp'])} C°\n"
-                        f"Feels like: {round(data['main']['feels_like'])} C°\n"
-                        f"Conditions: {wd}\n"
-                        f"Wind: {round(data['wind']['speed'])} m/s\n"
-                        f"Sunrise: {sunrise}\n"
-                        f"Sunset: {sunset}\n")
+                                f"Temperature: {round(data['main']['temp'])} C°\n"
+                                f"Feels like: {round(data['main']['feels_like'])} C°\n"
+                                f"Conditions: {wd}\n"
+                                f"Wind: {round(data['wind']['speed'])} m/s\n"
+                                f"Sunrise: {sunrise}\n"
+                                f"Sunset: {sunset}\n")
         else:
             await message.reply(f"Date: {datetime.datetime.now().strftime('%Y/%m/%d')}\n"
-                        f"Temperature: {round(data['main']['temp'])} C°\n"
-                        f"Feels like: {round(data['main']['feels_like'])} C°\n"
-                        f"Conditions: {wd}\n"
-                        f"Wind: {round(data['wind']['speed'])} m/s\n")
-             
-            
+                                f"Temperature: {round(data['main']['temp'])} C°\n"
+                                f"Feels like: {round(data['main']['feels_like'])} C°\n"
+                                f"Conditions: {wd}\n"
+                                f"Wind: {round(data['wind']['speed'])} m/s\n")
+
+
 
     except TypeError:
         await message.answer("Something has gone wrong...")
         await message.reply("Check your data")
     except KeyError:
-       await message.answer("Something has gone wrong...")
-       await message.reply("Check your data")
+        await message.answer("Something has gone wrong...")
+        await message.reply("Check your data")
 
 
 async def main():
