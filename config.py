@@ -1,3 +1,5 @@
 # import os
 # TOKEN = os.getenv("TOKEN")
-TOKEN = '6764036719:AAFAGVe4AtDLGnB76lcNJScXRd3gvGrS3WA'
+
+# Paste your token
+# TOKEN = ''
